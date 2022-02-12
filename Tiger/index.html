@@ -16,18 +16,13 @@
       vr-mode-ui="enabled: false;"
     >
       <a-assets>
-        <a-asset-item
-          id="model1"
-          src="./assets/samba_dancing_boris/scene.gltf"
-        ></a-asset-item>
-        <a-asset-item id="model2" src="./assets/tiger_run/scene.gltf"></a-asset-item>
+        <a-asset-item id="model1" src="./assets/tiger_run/scene.gltf"></a-asset-item>
       </a-assets>
 
       <!-- Hiro Marker -->
       <a-marker preset="hiro">
         <a-entity
-          id="model"
-          gltf-model="#model2"
+          gltf-model="#model1"
           rotation="0 90 -90"
           scale="5 5 5"
           animation-mixer
