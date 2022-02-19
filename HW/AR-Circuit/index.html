@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>AR Circuit</title>
+
+    <script src="https://aframe.io/releases/1.2.0/aframe.min.js"></script>
+    <script src="https://raw.githack.com/AR-js-org/AR.js/master/aframe/build/aframe-ar.js"></script>
+  </head>
+  <body>
+    <a-scene
+      embedded
+      arjs="sourceType: webcam; debugUIEnabled: false; trackingMethod:best;"
+      vr-mode-ui="enabled: false;"
+    >
+      <a-camera
+        look-controls="enabled: false"
+        wasd-controls="enabled: false"
+      ></a-camera>
+      <a-marker preset="hiro">
+        <a-gltf-model
+          src="./electric_circuit/scene.gltf"
+          scale="2 2 2"
+          rotation="-90 0 0"
+          position="-0.5 0 1"
+        ></a-gltf-model>
+      </a-marker>
+    </a-scene>
+  </body>
+</html>
