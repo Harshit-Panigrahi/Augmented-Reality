@@ -3,16 +3,13 @@
   <head>
     <title>Menu Card</title>
 
-    <meta
-      name="viewport"
-      content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0"
-    />
-
     <script src="https://aframe.io/releases/1.2.0/aframe.min.js"></script>
     <script src="https://raw.githack.com/AR-js-org/AR.js/master/aframe/build/aframe-ar.js"></script>
     <script src="https://cdn.jsdelivr.net/gh/donmccurdy/aframe-extras@v6.1.1/dist/aframe-extras.min.js"></script>
     <script src="https://raw.githack.com/fcor/arjs-gestures/master/dist/gestures.js"></script>
-    <script src="./create-buttons.js"></script>
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+    <script src="./js/create-buttons.js"></script>
+    <script src="./js/marker-handler.js"></script>
 
     <!-- Bootstrap -->
     <link
@@ -41,10 +38,11 @@
       </a-assets>
 
       <!-- Camera -->
-      <a-entity camera></a-entity>
+      <!-- <a-entity camera></a-entity> -->
 
       <!-- Marker -->
       <a-marker
+        marker-handler
         id="pizza-marker"
         type="pattern"
         url="./assets/pattern.patt"
@@ -53,14 +51,14 @@
         <a-entity
           id="pizza-model"
           gltf-model="#pizza"
-          position="-1.5 0 -5"
-          scale="0.05 0.05 0.05"
+          position="-2 0 -1.5"
+          scale="0.1 0.1 0.1"
           gesture-handler
         ></a-entity>
-        <a-plane position="0 0 -5" width="1.5" height="1.5" rotation="-90 0 0">
+        <a-plane position="1 0 -1.5" width="1.5" height="1.5" rotation="-90 0 0">
           <a-plane
             position="0 1 0"
-            width="1.49"
+            width="1.5"
             height="0.3"
             rotation="0 0 0"
             color="#F0C30F"
@@ -68,7 +66,7 @@
             <a-entity
               position="0 0 0.01"
               rotation="0 0 0"
-              text="font:monoid; value:PIZZA MARGHERITA; color:black; width: 1.8; height:1; align:center;"
+              text="font: monoid; value: PIZZA MARGHERITA; color:black; width: 1.8; height:1; align:center;"
             ></a-entity>
           </a-plane>
 
@@ -76,8 +74,7 @@
             position="0 0 0.01"
             rotation="0 0 0"
             text="color: black; align: center; width: 2; font: monoid; value: Tomato sauce\n\nMozzarella cheese\n\nParmesan cheese (optional)\n\nFresh Basil\n\nOlive oil\n\nBlack pepper (optional)"
-          >
-          </a-entity>
+          ></a-entity>
         </a-plane>
       </a-marker>
     </a-scene>
