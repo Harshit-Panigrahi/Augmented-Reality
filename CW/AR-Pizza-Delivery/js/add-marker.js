@@ -16,7 +16,6 @@ AFRAME.registerComponent("add-markers", {
       model.setAttribute("scale", dish.modelGeometry.scale);
       model.setAttribute("position", dish.modelGeometry.position);
       model.setAttribute("gltf-model", dish.modelUrl);
-      model.setAttribute("gesture-handler", "");
       marker.appendChild(model);
 
       let mainPlane = document.createElement("a-plane");
