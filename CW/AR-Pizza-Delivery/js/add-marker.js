@@ -8,7 +8,7 @@ AFRAME.registerComponent("add-markers", {
       marker.setAttribute("type", "pattern");
       marker.setAttribute("url", dish.markerPattUrl);
       marker.setAttribute("marker-handler", "");
-      marker.setAttribute("cursor", {rayOrigin: "mouse"});
+      marker.setAttribute("cursor", { rayOrigin: "mouse" });
       mainScene.appendChild(marker);
 
       let model = document.createElement("a-entity");
@@ -16,6 +16,7 @@ AFRAME.registerComponent("add-markers", {
       model.setAttribute("scale", dish.modelGeometry.scale);
       model.setAttribute("position", dish.modelGeometry.position);
       model.setAttribute("gltf-model", dish.modelUrl);
+      model.setAttribute("visible", "false")
       marker.appendChild(model);
 
       let mainPlane = document.createElement("a-plane");
@@ -24,6 +25,7 @@ AFRAME.registerComponent("add-markers", {
       mainPlane.setAttribute("width", "1.5");
       mainPlane.setAttribute("height", "1.5");
       mainPlane.setAttribute("rotation", "-90 0 0");
+      mainPlane.setAttribute("visible", "false");
       marker.appendChild(mainPlane);
 
       let titlePlane = document.createElement("a-plane");
@@ -51,6 +53,23 @@ AFRAME.registerComponent("add-markers", {
       ingredients.setAttribute("color", "black");
       ingredients.setAttribute("value", `${dish.ingredients.join("\n\n")}`);
       mainPlane.appendChild(ingredients);
+
+      let imgEl = document.createElement("a-image");
+      imgEl.setAttribute("id", `price-plane-${dish.id}`);
+      imgEl.setAttribute("src", "./black-circle.png");
+      imgEl.setAttribute("width", "1");
+      imgEl.setAttribute("height", "1");
+      imgEl.setAttribute("rotation", "-90 0 0");
+      imgEl.setAttribute("position", "-1 0 1.5");
+      imgEl.setAttribute("visible", "false");
+      marker.appendChild(imgEl);
+
+      let textEl = document.createElement("a-text");
+      textEl.setAttribute("id", `price-${dish.id}`);
+      textEl.setAttribute("value", `Only ₹ ${dish.price}!`);
+      textEl.setAttribute("align", "center");
+      textEl.setAttribute("width", "3")
+      imgEl.appendChild(textEl);
     });
   },
   getDishes: async function () {
