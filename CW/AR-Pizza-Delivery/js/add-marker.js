@@ -66,6 +66,7 @@ AFRAME.registerComponent("add-markers", {
 
       let textEl = document.createElement("a-text");
       textEl.setAttribute("id", `price-${dish.id}`);
+      textEl.setAttribute("position", "0 0 0.1")
       textEl.setAttribute("value", `Only ₹ ${dish.price}!`);
       textEl.setAttribute("align", "center");
       textEl.setAttribute("width", "3")
