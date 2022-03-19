@@ -1,0 +1,7 @@
+#btn-div {
+  display: none;
+  justify-content: space-evenly;
+  position: fixed;
+  bottom: 15px;
+  width: 100%;
+}
