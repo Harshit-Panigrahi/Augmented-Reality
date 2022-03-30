@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
   <head>
     <title>Menu Card</title>
     <!-- A-Frame AR and SweetAlert -->
@@ -8,35 +8,43 @@
     <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 
     <!-- Firestore -->
-    <script src="https://www.gstatic.com/firebasejs/8.2.9/firebase-app.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/8.2.9/firebase-firestore.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-firestore.js"></script>
     <script>
-      const firebaseConfig = {
+      firebase.initializeApp({
         apiKey: "AIzaSyBG9zSMKaG9unTbELieo1WKgkXlExF2Tb4",
         authDomain: "pizza-delivery-app-6b8de.firebaseapp.com",
         projectId: "pizza-delivery-app-6b8de",
         storageBucket: "pizza-delivery-app-6b8de.appspot.com",
         messagingSenderId: "875470917512",
         appId: "1:875470917512:web:c26de3dc03d77b363cb43d",
-      };
-
-      // Initialize Firebase
-      firebase.initializeApp(firebaseConfig);
+      });
     </script>
+
+    <!-- Bootstrap -->
+    <link
+      rel="stylesheet"
+      href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+      integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
+      crossorigin="anonymous"
+    />
+
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+
+    <link
+      href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap.min.css"
+      rel="stylesheet"
+      id="bootstrap-css"
+    />
+    <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/js/bootstrap.min.js"></script>
+    <script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
+    <link rel="stylesheet" href="styles.css" />
 
     <!-- JS Files -->
     <script src="./js/add-marker.js"></script>
     <script src="./js/create-buttons.js"></script>
     <script src="./js/marker-handler.js"></script>
-
-    <!-- Bootstrap -->
-    <link
-      href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css"
-      rel="stylesheet"
-      integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3"
-      crossorigin="anonymous"
-    />
-    <link rel="stylesheet" href="styles.css" />
   </head>
 
   <body style="margin: 0px; overflow: hidden">
@@ -55,5 +63,108 @@
 
     <!-- Button div -->
     <div id="button-div"></div>
+
+    <!-- Order Summary Boilerplate -->
+    <div class="container">
+      <div id="modal-div" class="modal" tabindex="-1" role="dialog">
+        <div class="modal-dialog" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title">Order Summary</h5>
+              <button
+                type="button"
+                class="close"
+                data-dismiss="modal"
+                aria-label="Close"
+                onclick="closeModal()"
+              >
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+              <div class="table-responsive">
+                <table class="table table-condensed">
+                  <thead>
+                    <tr>
+                      <td><strong>Item</strong></td>
+                      <td class="text-center"><strong>Price</strong></td>
+                      <td class="text-center"><strong>Quantity</strong></td>
+                      <td class="text-right"><strong>Total</strong></td>
+                    </tr>
+                  </thead>
+                  <tbody id="bill-table-body">
+                    <!-- foreach ($order->lineItems as $line)  -->
+                    <!-- Your Order Summary will comes here  -->
+                  </tbody>
+                </table>
+              </div>
+            </div>
+            <div class="modal-footer">
+              <button id="pay-btn" type="button" class="btn btn-primary">
+                Pay Now
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Boilerplate for Ratings Modal -->
+    <div class="container">
+      <div
+        id="rating-modal-div"
+        class="rating-modal"
+        tabindex="-1"
+        role="dialog"
+      >
+        <div class="modal-dialog" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title">Rate Dish</h5>
+              <button
+                type="button"
+                class="close"
+                data-dismiss="modal"
+                aria-label="Close"
+                onclick="closeRatingModal()"
+              >
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+              <div class="table-responsive">
+                <!--Text Field Input-->
+                <textarea
+                  class="form-control"
+                  id="feedback-input"
+                  rows="3"
+                ></textarea>
+
+                <!--Stars Input-->
+                <input
+                  id="rating-input"
+                  name="rating-input"
+                  class="rating rating-loading"
+                  data-min="0"
+                  data-max="5"
+                  data-step="0.1"
+                  value="0"
+                />
+              </div>
+            </div>
+            <div class="modal-footer">
+              <!--Submit Button-->
+              <button
+                id="save-rating-button"
+                type="button"
+                class="btn btn-primary"
+              >
+                Submit
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
   </body>
 </html>

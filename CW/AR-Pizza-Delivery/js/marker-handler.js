@@ -72,6 +72,7 @@ AFRAME.registerComponent("marker-handler", {
       let rateBtn = document.getElementById("rate-btn");
       let orderBtn = document.getElementById("order-btn");
       let sumBtn = document.getElementById("sum-btn");
+      let payBtn = document.getElementById("pay-btn");
 
       if (tableNum != null) {
         rateBtn.addEventListener("click", () => {
@@ -93,15 +94,87 @@ AFRAME.registerComponent("marker-handler", {
             buttons: false,
           });
         });
-        sumBtn.addEventListener("click", this.handleOrderSummary());
+        rateBtn.addEventListener("click", () => {
+          this.handleRate(dish);
+        });
+        sumBtn.addEventListener("click", () => {
+          this.handleOrderSummary();
+        });
+        payBtn.addEventListener("click", () => {
+          this.handlePay();
+        });
       }
     }
+  },
+  handleRate: async function (dish) {
+    let tNum;
+    tableNum <= 9 ? (tNum = `T0${tableNum}`) : `T${tableNum}`;
+    let orderSum = await this.getOrderSummary(tNum);
+    let currentOrders = Object.keys(orderSum.orders);
+    if (currentOrders.length > 0 && currentOrders.includes(dish.id)) {
+      document.getElementById("rating-modal-div").style.display = "flex";
+      document.getElementById("feedback-input").value = "";
+      document.getElementById("rating-input").value = "0";
+      let ratingBtn = document.getElementById("save-rating-button");
+      ratingBtn.addEventListener("click", ()=>{
+        document.getElementById("rating-modal-div").style.display = "none";
+        let rating = document.getElementById("rating-input").value;
+        let feedback = document.getElementById("feedback-input").value;
+        
+      });
+    }
+  },
+  handlePay: function () {
+    let tNum;
+    tableNum <= 9 ? (tNum = `T0${tableNum}`) : `T${tableNum}`;
+    document.getElementById("modal-div").style.display = "none";
+    firebase
+      .firestore()
+      .collection("Tables")
+      .doc(tNum)
+      .update({
+        billAmnt: 0,
+        orders: {},
+      })
+      .then(() => {
+        swal({
+          icon: "success",
+          title: "Hope you enjoyed your food!",
+          text: "Order again soon.",
+          timer: 5000,
+          buttons: false,
+        });
+      });
   },
   handleOrderSummary: async function () {
     let tNum;
     tableNum <= 9 ? (tNum = `T0${tableNum}`) : `T${tableNum}`;
     let orderSum = await this.getOrderSummary(tNum);
-    
+    let currentOrders = Object.keys(orderSum.orders);
+    console.log(currentOrders);
+    let modalDiv = document.getElementById("modal-div");
+    modalDiv.style.display = "flex";
+    let tableBody = document.getElementById("bill-table-body");
+    tableBody.innerHTML = "";
+    currentOrders.map((i) => {
+      let row = document.createElement("tr");
+      let item = document.createElement("td");
+      let price = document.createElement("td");
+      let quantity = document.createElement("td");
+      let subtotal = document.createElement("td");
+      item.innerHTML = orderSum.orders[i].item;
+      price.innerHTML = `₹ ${orderSum.orders[i].price}`;
+      price.setAttribute("class", "text-center");
+      quantity.innerHTML = orderSum.orders[i].quantity;
+      quantity.setAttribute("class", "text-center");
+      subtotal.innerHTML = `₹ ${orderSum.orders[i].subtotal}`;
+      subtotal.setAttribute("class", "text-center");
+      row.appendChild(item);
+      row.appendChild(price);
+      row.appendChild(quantity);
+      row.appendChild(subtotal);
+      tableBody.appendChild(row);
+    });
   },
   getOrderSummary: async function (tNum) {
     return await firebase
