@@ -16,27 +16,6 @@ AFRAME.registerComponent("marker-handler", {
     });
   },
   handleMarkerFound: function (dishes, markerID) {
-    /* let buttonDiv = document.getElementById("button-div");
-    buttonDiv.style.display = "flex";
-
-    let rateBtn = document.getElementById("rate-btn");
-    let orderBtn = document.getElementById("order-btn");
-
-    rateBtn.addEventListener("click", function () {
-      swal({
-        icon: "warning",
-        title: "Rate Dish",
-        text: "Work in Progress",
-      });
-    });
-    orderBtn.addEventListener("click", function () {
-      swal({
-        icon: "success",
-        title: "Thanks for ordering!",
-        text: "Your order is arriving soon.",
-      });
-    }); */
-
     var date = new Date();
     var day = date.getDay();
     var days = [
@@ -75,13 +54,6 @@ AFRAME.registerComponent("marker-handler", {
       let payBtn = document.getElementById("pay-btn");
 
       if (tableNum != null) {
-        rateBtn.addEventListener("click", () => {
-          swal({
-            icon: "warning",
-            title: "Rate Dish",
-            text: "Work in Progress",
-          });
-        });
         orderBtn.addEventListener("click", () => {
           let tNum;
           tableNum <= 9 ? (tNum = `T0${tableNum}`) : `T${tableNum}`;
@@ -111,6 +83,7 @@ AFRAME.registerComponent("marker-handler", {
     tableNum <= 9 ? (tNum = `T0${tableNum}`) : `T${tableNum}`;
     let orderSum = await this.getOrderSummary(tNum);
     let currentOrders = Object.keys(orderSum.orders);
+    console.log("Rate button")
     if (currentOrders.length > 0 && currentOrders.includes(dish.id)) {
       document.getElementById("rating-modal-div").style.display = "flex";
       document.getElementById("feedback-input").value = "";
@@ -120,7 +93,17 @@ AFRAME.registerComponent("marker-handler", {
         document.getElementById("rating-modal-div").style.display = "none";
         let rating = document.getElementById("rating-input").value;
         let feedback = document.getElementById("feedback-input").value;
-        
+        firebase.firestore().collection("Dishes").doc(dish.id).update({
+          rating: rating,
+          review: feedback,
+        }).then(()=>{
+          swal({
+            icon: "success",
+            title: "Thanks for your feedback!",
+            timer: 5000,
+            buttons: false,
+          });
+        })
       });
     }
   },

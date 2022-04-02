@@ -37,7 +37,7 @@ AFRAME.registerComponent("add-markers", {
       mainPlane.appendChild(titlePlane);
 
       let dishTitle = document.createElement("a-text");
-      dishTitle.setAttribute("id", `title-plane-${dish.id}`);
+      dishTitle.setAttribute("id", `title-name-${dish.id}`);
       dishTitle.setAttribute("position", { x: 0, y: 1, z: 0.01 });
       dishTitle.setAttribute("width", "2");
       dishTitle.setAttribute("align", "center");
