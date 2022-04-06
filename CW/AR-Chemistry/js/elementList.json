@@ -1,0 +1,57 @@
+{
+  "0": {
+    "element_name": "H",
+    "barcode_value": 0,
+    "atomic_number": 1
+  },
+  "1": {
+    "element_name": "Li",
+    "barcode_value": 1,
+    "atomic_number": 3
+  },
+  "2": {
+    "element_name": "Na",
+    "barcode_value": 2,
+    "atomic_number": 11
+  },
+  "3": {
+    "element_name": "K",
+    "barcode_value": 3,
+    "atomic_number": 19
+  },
+  "4": {
+    "element_name": "F",
+    "barcode_value": 4,
+    "atomic_number": 9
+  },
+  "5": {
+    "element_name": "Cl",
+    "barcode_value": 5,
+    "atomic_number": 17
+  },
+  "6": {
+    "element_name": "Br",
+    "barcode_value": 6,
+    "atomic_number": 35
+  },
+  "7": {
+    "element_name": "I",
+    "barcode_value": 7,
+    "atomic_number": 53
+  },
+  "8": {
+    "element_name": "O",
+    "barcode_value": 8,
+    "atomic_number": 8
+  },
+  "9": {
+    "element_name": "S",
+    "barcode_value": 8,
+    "atomic_number": 16
+  },
+  "10": {
+    "element_name": "Se",
+    "barcode_value": 10,
+    "atomic_number": 34
+  }
+}
