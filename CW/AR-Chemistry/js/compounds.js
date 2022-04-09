@@ -8,7 +8,7 @@ AFRAME.registerComponent("atoms", {
     });
   },
   getCompounds: async function () {
-    const res = await fetch("js/coumpundList.json");
+    const res = await fetch("js/compoundList.json");
     const data = await res.json();
     return data;
   },
