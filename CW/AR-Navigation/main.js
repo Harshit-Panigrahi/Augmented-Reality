@@ -21,6 +21,7 @@ $(function() {
 })
 
 function success(pos) {
+  console.log(pos.coords)
   latitude = pos.coords.latitude;
   longitude = pos.coords.longitude;
 
@@ -29,7 +30,7 @@ function success(pos) {
 
   let map = new mapboxgl.Map({
     container: "map",
-    style: "mapbox://styles/mapbox/streets-v11",
+    style: "mapbox://styles/mapbox/satellite-streets-v11",
     center: [longitude, latitude],
     zoom: 20,
   });
