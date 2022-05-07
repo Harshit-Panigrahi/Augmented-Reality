@@ -8,8 +8,8 @@ import {
   Platform,
 } from "react-native";
 import { Camera } from "expo-camera";
-import * as Permissions from "expo-permissions";
 import * as FaceDetector from "expo-face-detector";
+import Filter1 from "./filter";
 
 export default class Main extends React.Component {
   constructor() {
@@ -18,23 +18,27 @@ export default class Main extends React.Component {
       hasCamPermissions: null,
       faces: [],
     };
+    this.getCamPermission = this.getCamPermission.bind(this);
+    this.onFaceDetect = this.onFaceDetect.bind(this);
+    this.onFaceDetectError = this.onFaceDetectError.bind(this);
   }
   componentDidMount() {
-    Permissions.askAsync(Permissions.CAMERA).then(this.onCamPermission);
+    this.getCamPermission()
   }
-  onCamPermission = (status) => {
+  async getCamPermission() {
+    const { status } = await Camera.requestCameraPermissionsAsync();
     this.setState({
       hasCamPermissions: status.status === "granted",
     });
-  };
-  onFaceDetect = (faces) => {
+  }
+  onFaceDetect(faces) {
     this.setState({
-      faces: faces
-    })
-  }
-  onFaceDetectError = (err) => {
+      faces: faces,
+    });
+  };
+  onFaceDetectError(err) {
     console.log(err);
-  }
+  };
   render() {
     if (this.state.hasCamPermissions == null) {
       return <View></View>;
@@ -58,13 +62,17 @@ export default class Main extends React.Component {
               style={{ flex: 1 }}
               type={Camera.Constants.Type.front}
               faceDetectorSettings={{
-                mode: FaceDetector.Constants.mode.fast,
-                detectLandmarks: FaceDetector.Constants.Landmarks.all,
-                runClassifications: FaceDetector.Constants.Classifications.all,
+                mode: FaceDetector.FaceDetectorMode.fast,
+                detectLandmarks: FaceDetector.FaceDetectorLandmarks.all,
+                runClassifications:
+                  FaceDetector.FaceDetectorClassifications.all,
               }}
               onFacesDetected={this.onFaceDetect}
               onFacesDetectionError={this.onFaceDetectError}
             />
+            {this.state.faces.map((face) => {
+              return <Filter1 key={face.faceID} face={face} />;
+            })}
           </View>
         </SafeAreaView>
       </View>
