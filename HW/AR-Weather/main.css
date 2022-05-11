@@ -1,0 +1,25 @@
+#coords {
+  background: rgba(0, 0, 0, 0.6);
+  color: white;
+  position: absolute;
+  bottom: 25px;
+  left: 25px;
+  padding: 10px 15px;
+  font-size: 15px;
+  border-radius: 7px;
+}
+
+#geocoder-container > div {
+  min-width: 50%;
+  margin-left: 25%;
+}
+
+#weather-btn {
+  position: absolute;
+  top: 30px;
+  left: 30px;
+  font-size: 15px;
+  padding: 8px 10px;
+  border-radius: 7px;
+  border-color: transparent;
+}
