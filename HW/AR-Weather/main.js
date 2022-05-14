@@ -12,7 +12,6 @@ $(function () {
       createMap();
     });
     $("#weather-btn").click(function () {
-      console.log("btn clicked");
       window.location.href = `weather.html?lng=${longitude}&lat=${latitude}`;
     });
   } else {
@@ -35,13 +34,10 @@ function createMap() {
   map.addControl(
     new MapboxGeocoder({
       accessToken: mapboxgl.accessToken,
-      mapboxgl: mapboxgl,
-      marker: { color: "crimson" },
     }).on("result", (e) => {
       longitude = e.result.center[0];
       latitude = e.result.center[1];
       marker.setLngLat([longitude, latitude]);
-      map.flyTo({ center: [longitude, latitude], zoom: 10, speed: 1.5 });
     })
   );
   map.addControl(
