@@ -1,7 +1,7 @@
 import React from "react";
 import { View, Image } from "react-native";
 
-const Filter2 = ({
+const Filter1 = ({
   face: {
     bounds: {
       size: { width: faceWidth, height: faceHeight },
@@ -26,7 +26,7 @@ const Filter2 = ({
       }}
     >
       <Image
-        source={require("../assets/Frapp-02.png")}
+        source={require("../assets/Frapp-01.png")}
         style={{
           width: glassWidth,
           height: glassHeight,
@@ -38,4 +38,4 @@ const Filter2 = ({
   );
 };
 
-export default Filter2;
+export default Filter1;

@@ -1,129 +1,161 @@
 import React from "react";
 import {
-  Text,
   StyleSheet,
-  StatusBar,
-  SafeAreaView,
+  Text,
   View,
-  ScrollView,
+  SafeAreaView,
+  StatusBar,
   Platform,
   TouchableOpacity,
   Image,
+  ScrollView
 } from "react-native";
-import { Camera } from "expo-camera";
+
+import * as Permissions from "expo-permissions";
 import * as FaceDetector from "expo-face-detector";
 import { RFValue, RFPercentage } from "react-native-responsive-fontsize";
-import Filter1 from "./filter";
+import { Camera } from "expo-camera";
+import Filter1 from "./filter1";
 import Filter2 from "./filter2";
+import Filter3 from "./filter3";
 
 let data = [
   {
-    "id": 1,
-    "image": require("../assets/Frapp-02.png"),
+    id: 1,
+    image: require("../assets/Frapp-01.png"),
   },
   {
-    "id": 2,
-    "image": require("../assets/Frapp-03.png"),
+    id: 2,
+    image: require("../assets/Frapp-02.png"),
+  },
+  {
+    id: 3,
+    image: require("../assets/Frapp-03.png"),
+  },
+  {
+    id: 4,
+    image: require("../assets/Frapp-04.png"),
+  },
+  {
+    id: 5,
+    image: require("../assets/Frapp-05.png"),
+  },
+  {
+    id: 6,
+    image: require("../assets/Frapp-06.png"),
+  },
+  {
+    id: 7,
+    image: require("../assets/Frapp-07.png"),
+  },
+  {
+    id: 8,
+    image: require("../assets/Frapp-08.png"),
+  },
+  {
+    id: 9,
+    image: require("../assets/Frapp-09.png"),
+  },
+  {
+    id: 10,
+    image: require("../assets/Frapp-10.png"),
   },
 ];
 
 export default class Main extends React.Component {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
     this.state = {
-      hasCamPermissions: true,
+      hasCameraPermission: null,
       faces: [],
-      currentFilter: "filter1",
     };
-    this.getCamPermission = this.getCamPermission.bind(this);
-    this.onFaceDetect = this.onFaceDetect.bind(this);
-    this.onFaceDetectError = this.onFaceDetectError.bind(this);
+    this.onCameraPermission = this.onCameraPermission.bind(this);
+    this.onFacesDetected = this.onFacesDetected.bind(this);
+    this.onFaceDetectionError = this.onFaceDetectionError.bind(this);
   }
+
   componentDidMount() {
-    this.getCamPermission();
+    Permissions.askAsync(Permissions.CAMERA).then(this.onCameraPermission);
   }
-  async getCamPermission () {
-    const { status } = await Camera.requestCameraPermissionsAsync();
-    this.setState({
-      hasCamPermissions: status.status === "granted",
-    });
+
+  onCameraPermission({ status }) {
+    this.setState({ hasCameraPermission: status === "granted" });
   }
-  onFaceDetect(faces) {
-    this.setState({
-      faces: faces,
-    });
+
+  onFacesDetected({ faces }) {
+    this.setState({ faces: faces });
   }
-  onFaceDetectError(err) {
-    console.log(err);
+
+  onFaceDetectionError(error) {
+    console.log(error);
   }
+
   render() {
-    console.log(this.state.hasCamPermissions)
-    if (this.state.hasCamPermissions === null) {
-      return <View>Text</View>;
+    const { hasCameraPermission } = this.state;
+    if (hasCameraPermission === null) {
+      return <View />;
     }
-    /* if (this.state.hasCamPermissions === false) {
+    if (hasCameraPermission === false) {
       return (
-        <View>
-          <Text>Camera Permission Denied</Text>
+        <View style={styles.container}>
+          <Text>No access to camera</Text>
         </View>
       );
-    } */
+    }
     return (
-      console.log("success"),
       <View style={styles.container}>
-        <SafeAreaView style={styles.droidSafeArea}> 
-          <View style={styles.headingContainer}>
-            <Text style={styles.titleText1}>Face Recognition App</Text>
-          </View>
-          <View style={styles.cameraStyle}>
-            {/* <Camera
-              style={{ flex: 1 }}
-              type={Camera.Constants.Type.front}
-              faceDetectorSettings={{
-                mode: FaceDetector.FaceDetectorMode.fast,
-                detectLandmarks: FaceDetector.FaceDetectorLandmarks.all,
-                runClassifications:
-                  FaceDetector.FaceDetectorClassifications.all,
-              }}
-              onFacesDetected={this.onFaceDetect}
-              onFacesDetectionError={this.onFaceDetectError}
-            />
-
-            {this.state.faces.map((face) => {
-              if (this.state.currentFilter === "filter1") {
-                return <Filter1 key={face.faceID} face={face} />;
-              } else if (this.state.currentFilter === "filter2") {
-                return <Filter2 key={face.faceID} face={face} />;
-              }
-            })} */}
-          </View>
-          <View style={styles.framesContainer}>
-            <ScrollView
-              style={{ flexDirection: "row" }}
-              horizontal={true}
-              showsHorizontalScrollIndicator={false}
-            >
-              {data.map((filterData) => {
-                return (
-                  <TouchableOpacity
-                    style={styles.filterImageContainer}
-                    key={`filter${filterData.id}`}
-                    onPress={() => {
-                      this.setState({
-                        currentFilter: `filter${filterData.id}`,
-                      });
-                    }}
-                  >
-                    <Image
-                      source={filterData.image}
-                      style={{ height: 30, width: 70 }}
-                    />
-                  </TouchableOpacity>
-                );
-              })}
-            </ScrollView>
-          </View>
-        </SafeAreaView>
+        <SafeAreaView style={styles.droidSafeArea} />
+        <View style={styles.headingContainer}>
+          <Text style={styles.titleText1}>FRAPP</Text>
+        </View>
+        <View style={styles.cameraStyle}>
+          <Camera
+            style={{ flex: 1 }}
+            type={Camera.Constants.Type.front}
+            faceDetectorSettings={{
+              mode: FaceDetector.FaceDetectorMode.fast,
+              detectLandmarks: FaceDetector.FaceDetectorLandmarks.all,
+              runClassifications: FaceDetector.FaceDetectorClassifications.all,
+            }}
+            onFacesDetected={this.onFacesDetected}
+            onFacesDetectionError={this.onFacesDetectionError}
+          />
+          {this.state.faces.map((face) => {
+            if (this.state.currentFilter === "filter1") {
+              return <Filter1 key={face.faceID} face={face} />;
+            } else if (this.state.currentFilter === "filter2") {
+              return <Filter2 key={face.faceID} face={face} />;
+            } else if (this.state.currentFilter === "filter3") {
+              return <Filter3 key={face.faceID} face={face} />;
+            }
+          })}
+        </View>
+        <View style={styles.framesContainer}>
+          <ScrollView
+            style={{ flexDirection: "row" }}
+            horizontal={true}
+            showsHorizontalScrollIndicator={false}
+          >
+            {data.map((filterData) => {
+              return (
+                <TouchableOpacity
+                  style={styles.filterImageContainer}
+                  key={`filter${filterData.id}`}
+                  onPress={() => {
+                    this.setState({
+                      currentFilter: `filter${filterData.id}`,
+                    });
+                  }}
+                >
+                  <Image
+                    source={filterData.image}
+                    style={{ height: 30, width: 70 }}
+                  />
+                </TouchableOpacity>
+              );
+            })}
+          </ScrollView>
+        </View>
       </View>
     );
   }
